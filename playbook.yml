@@ -1,0 +1,67 @@
+---
+- hosts: all
+  vars:
+    postgresql:
+      version: 9.1
+      user: mailsandbox
+      password: mailsandbox
+    ruby_version: '2.0.0-p353'
+    ruby_url: 'ftp://ftp.ruby-lang.org//pub/ruby/2.0/ruby-{{ ruby_version }}.tar.gz'
+
+  tasks:
+    - name: install_packages 
+      apt:  pkg={{ item }} state=installed  update_cache=yes 
+      sudo: true
+      with_items:
+        - curl
+        - vim
+        - runit
+        - libpq-dev
+        - python-psycopg2
+        - bcrypt
+        - git-core
+        - postgresql-{{postgresql.version}}
+        - rails
+    
+    - name: get currently installed ruby version
+      command: ruby -v
+      register: result
+      ignore_errors: True
+
+    - name: Ensure ruby dependencies are installed
+      apt: pkg=$item state=installed update-cache=yes
+      sudo: yes
+      with_items:
+        - build-essential
+        - git-core
+        - libreadline6-dev
+        - libyaml-dev
+        - libsqlite3-dev
+        - sqlite3
+        - libgdbm-dev
+        - libncurses5-dev
+        - libtool
+        - bison
+        - libffi-dev
+        - libdigest-hmac-perl
+        - unzip
+        - zlib1g
+        - zlib1g-dev
+      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
+
+    - name: Ensure the ruby source is downloaded
+      get_url: url=$ruby_url dest=/home/vagrant/ruby-{{ ruby_version }}.tar
+      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
+
+    - name: Ensure the ruby source is extracted
+      command: tar -zxf /home/vagrant/ruby-$ruby_version.tar creates=/home/vagrant/ruby-{{ ruby_version }}
+      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
+
+    - name: Ensure ruby is installed
+      command: $item chdir=/home/vagrant/ruby-$ruby_version
+      with_items:
+        - ./configure
+        - make
+        - sudo make install
+      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
+
