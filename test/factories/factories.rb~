@@ -4,10 +4,4 @@ FactoryGirl.define do
     text  { generate :string }
   end
 
-	factory :comment do
-    commenter { generate :string }
-    body { generate :string }
-    post 
-  end
-
 end
