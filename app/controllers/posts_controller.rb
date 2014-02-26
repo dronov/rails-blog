@@ -1,4 +1,7 @@
 class PostsController < ApplicationController
+
+  http_basic_authenticate_with name: "mechanic", password: "qwerty", except: [:index, :show]
+
   def new
     @post = Post.new
   end
@@ -27,7 +30,7 @@ class PostsController < ApplicationController
 
   def update
     @post = Post.find(params[:id])
-   
+
     if @post.update(post_params)
       redirect_to @post
     else
@@ -38,7 +41,7 @@ class PostsController < ApplicationController
   def destroy
     @post = Post.find(params[:id])
     @post.destroy
-     
+
     redirect_to posts_path
   end
 
