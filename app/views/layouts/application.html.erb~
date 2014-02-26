@@ -18,7 +18,7 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand" href="/">Wonderful Blog</a>
+        <a class="brand" href="">Wonderful Blog</a>
         <div class="nav-collapse">
           <ul class="nav">
             <li><%= link_to "All posts", "posts" %></li>
