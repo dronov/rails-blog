@@ -1,5 +1,7 @@
 source 'https://rubygems.org'
 
+gem 'pg'
+
 gem "less-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
