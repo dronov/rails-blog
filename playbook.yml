@@ -5,12 +5,13 @@
       version: 9.1
       user: mailsandbox
       password: mailsandbox
-    ruby_version: '2.0.0-p353'
-    ruby_url: 'ftp://ftp.ruby-lang.org//pub/ruby/2.0/ruby-{{ ruby_version }}.tar.gz'
+    ruby: '2.0.0-p353'
+    dev_db: demo_db
+    test_db: test_db
 
   tasks:
-    - name: install_packages 
-      apt:  pkg={{ item }} state=installed  update_cache=yes 
+    - name: install_packages
+      apt:  pkg={{ item }} state=installed  update_cache=yes
       sudo: true
       with_items:
         - curl
@@ -18,20 +19,8 @@
         - runit
         - libpq-dev
         - python-psycopg2
-        - bcrypt
         - git-core
         - postgresql-{{postgresql.version}}
-        - rails
-    
-    - name: get currently installed ruby version
-      command: ruby -v
-      register: result
-      ignore_errors: True
-
-    - name: Ensure ruby dependencies are installed
-      apt: pkg=$item state=installed update-cache=yes
-      sudo: yes
-      with_items:
         - build-essential
         - git-core
         - libreadline6-dev
@@ -47,21 +36,42 @@
         - unzip
         - zlib1g
         - zlib1g-dev
-      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
-
-    - name: Ensure the ruby source is downloaded
-      get_url: url=$ruby_url dest=/home/vagrant/ruby-{{ ruby_version }}.tar
-      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
-
-    - name: Ensure the ruby source is extracted
-      command: tar -zxf /home/vagrant/ruby-$ruby_version.tar creates=/home/vagrant/ruby-{{ ruby_version }}
-      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
-
-    - name: Ensure ruby is installed
-      command: $item chdir=/home/vagrant/ruby-$ruby_version
-      with_items:
-        - ./configure
         - make
-        - sudo make install
-      when: result.rc !=0 or result.stdout.split()[1] != ruby_version
+        - autoconf
+        - libssl-dev
+        - openssl
 
+    - name: install rvm
+      shell: \curl -L https://get.rvm.io | bash -s stable --autolibs=3 creates=~/.rvm
+
+    - name: install ruby
+      shell: ~/.rvm/bin/rvm install --default {{ ruby }} creates=~/.rvm/rubies/{{ ruby }} }} }}
+
+    - name: install rails
+      shell:  echo 'cd /vagrant/ && bundle install && gem install rails'
+
+    - name: source
+      shell: echo 'source ~/.rvm/scripts/rvm >> ~/.bashrc'
+
+    - name: setup postgres cluster to default to utf8
+  # if the dbs haven't been created yet, we want to destroy the whole db
+  # cluster and recreate it with proper utf8 support. From http://ph.ly/pg
+      sudo: yes
+      sudo_user: postgres
+      shell: "pg_dropcluster --stop 9.1 main && pg_createcluster --start -e UTF-8 9.1 main"
+      when: db_setup.rc != 0 # only do this if the dbs haven't been created yet
+
+    - name: create db user
+      sudo: yes
+      sudo_user: postgres
+      postgresql_user: name=vagrant password=secret
+                   role_attr_flags=SUPERUSER
+    - name: create dbs
+      sudo: yes
+      sudo_user: postgres
+      postgresql_db: name=$item owner=vagrant
+                 encoding='UTF-8' lc_collate='en_US.UTF-8' lc_ctype='en_US.UTF-8' template='template0'
+                 state=present
+      with_items:
+        - $dev_db
+        - $test_db
