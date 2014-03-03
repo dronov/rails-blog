@@ -3,10 +3,6 @@ require 'test_helper'
 class CommentsControllerTest < ActionController::TestCase
   include FactoryGirl::Syntax::Methods
 
-  def setup
-    @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("mechanic:qwerty")
-  end
-
   test "create" do
     test_post = create :post
     test_params = attributes_for(:comment)

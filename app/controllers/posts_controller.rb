@@ -1,16 +1,21 @@
 class PostsController < ApplicationController
+  before_filter :current_user
 
   def new
     @post = Post.new
   end
 
   def create
-    @post = Post.new(post_params)
+    if @current_user
+      @post = Post.new(post_params)
 
-    if @post.save
-      redirect_to @post
+      if @post.save
+        redirect_to @post
+      else
+        render 'new'
+      end
     else
-      render 'new'
+      redirect_to root_path
     end
   end
 

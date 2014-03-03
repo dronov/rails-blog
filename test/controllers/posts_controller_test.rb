@@ -4,10 +4,6 @@ class PostsControllerTest < ActionController::TestCase
 
   include FactoryGirl::Syntax::Methods
 
-  def setup
-    @request.env["HTTP_AUTHORIZATION"] = "Basic " + Base64::encode64("mechanic:qwerty")
-  end
-
   test "new" do
     get :new
     assert_response :success
@@ -33,9 +29,9 @@ class PostsControllerTest < ActionController::TestCase
   end
 
   test "edit" do
-    post = create :post
-    get :edit, :id => post.id
-    assert_response :success
+      post = create :post
+      get :edit, :id => post.id
+      assert_response :success
   end
 
   test "update" do
