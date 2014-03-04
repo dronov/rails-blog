@@ -12119,3 +12119,1457 @@ Redirected to http://test.host/posts/980190969
 Completed 302 Found in 11ms (ActiveRecord: 4.9ms)
   [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", 980190969]]
   [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (118.5ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (353.3ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (7.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (10.1ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (1.9ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (6.5ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (8.7ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.1ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (5.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.3ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (2.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (3.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.3ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.1ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.2ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (2.5ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.0ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:14:59', '2014-03-04 06:14:59', 980190962)[0m
+  [1m[35mFixture Insert (1.4ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:14:59', '2014-03-04 06:14:59', 298486374)
+  [1m[36m (2.5ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.4ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.9ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 65ms (ActiveRecord: 12.3ms)
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[36m (0.9ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (1.6ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.5ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.9ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 11ms (ActiveRecord: 5.9ms)
+  [1m[35m (0.6ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (1.1ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[35m (1.2ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (2.1ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 13ms (ActiveRecord: 7.1ms)
+  [1m[35mPost Exists (1.3ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (0.9ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (45.1ms)
+Completed 200 OK in 211ms (Views: 208.9ms | ActiveRecord: 0.9ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 41ms (Views: 39.5ms | ActiveRecord: 1.3ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.1ms)
+Completed 200 OK in 70ms (Views: 69.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.0ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (8.3ms)
+Completed 200 OK in 81ms (Views: 77.8ms | ActiveRecord: 2.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.2ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:15:00 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 4.8ms)
+  [1m[35mPost Load (0.6ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (1.1ms)[0m  [1mROLLBACK[0m
+  [1m[36m (115.5ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (412.1ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (4.2ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (14.0ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (4.5ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (11.5ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (15.5ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.2ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (7.2ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (2.0ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (3.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (2.6ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.7ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (1.6ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.4ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:15:38', '2014-03-04 06:15:38', 980190962)[0m
+  [1m[35mFixture Insert (1.6ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:15:38', '2014-03-04 06:15:38', 298486374)
+  [1m[36m (3.2ms)[0m  [1mCOMMIT[0m
+  [1m[35m (2.5ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.2ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.4ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.2ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 57ms (ActiveRecord: 13.7ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[36m (1.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 14ms (ActiveRecord: 7.2ms)
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.5ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.1ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (1.7ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.3ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 10ms (ActiveRecord: 5.7ms)
+  [1m[35mPost Exists (1.6ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.0ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (45.8ms)
+Completed 200 OK in 232ms (Views: 229.7ms | ActiveRecord: 1.1ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 49ms (Views: 47.8ms | ActiveRecord: 1.3ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.3ms)
+Completed 200 OK in 70ms (Views: 69.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[35m (0.5ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (0.7ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (8.6ms)
+Completed 200 OK in 62ms (Views: 59.4ms | ActiveRecord: 1.8ms)
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:15:39 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 4.9ms)
+  [1m[35mPost Load (0.9ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (1.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 62ms (Views: 61.1ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (113.2ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (378.2ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (9.6ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (11.3ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (4.6ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (9.6ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (7.6ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.5ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (7.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.8ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (2.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (3.0ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (1.0ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.1ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.9ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.2ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:16:27', '2014-03-04 06:16:27', 980190962)[0m
+  [1m[35mFixture Insert (1.4ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:16:27', '2014-03-04 06:16:27', 298486374)
+  [1m[36m (3.0ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (7.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.8ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.0ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 57ms (ActiveRecord: 13.6ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (0.9ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.4ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.8ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 12ms (ActiveRecord: 6.5ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:16:27 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.2ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (2.0ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 13ms (ActiveRecord: 6.8ms)
+  [1m[35mPost Exists (1.4ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.6ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (47.1ms)
+Completed 200 OK in 225ms (Views: 222.3ms | ActiveRecord: 1.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 54ms (Views: 52.7ms | ActiveRecord: 1.1ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.1ms)
+Completed 200 OK in 76ms (Views: 75.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.9ms)
+Completed 200 OK in 67ms (Views: 63.3ms | ActiveRecord: 2.2ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:16:28 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 4.7ms)
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 50ms (Views: 49.5ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (115.9ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (396.6ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (5.6ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (19.9ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (7.3ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (18.1ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (19.4ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.8ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (6.6ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.6ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (3.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (2.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.9ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (3.3ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (2.4ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.7ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:17:06', '2014-03-04 06:17:06', 980190962)[0m
+  [1m[35mFixture Insert (1.5ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:17:06', '2014-03-04 06:17:06', 298486374)
+  [1m[36m (3.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.9ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.8ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.3ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.5ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 60ms (ActiveRecord: 13.7ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.7ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.4ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 11ms (ActiveRecord: 6.3ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (2.1ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 14ms (ActiveRecord: 7.1ms)
+  [1m[35mPost Exists (1.2ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:17:06 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (45.0ms)
+Completed 200 OK in 204ms (Views: 201.9ms | ActiveRecord: 1.2ms)
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 41ms (Views: 39.9ms | ActiveRecord: 1.2ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.8ms)
+Completed 200 OK in 71ms (Views: 70.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:17:07 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:17:07 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.3ms)
+Completed 200 OK in 63ms (Views: 59.7ms | ActiveRecord: 2.3ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:17:07 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:17:07 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:17:07 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 4.7ms)
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 47ms (Views: 46.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[36m (113.7ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (439.7ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (3.5ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (10.5ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (2.2ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (11.1ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (16.2ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.0ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (7.5ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.7ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (2.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.8ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.4ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (1.4ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (3.5ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:19:36', '2014-03-04 06:19:36', 980190962)[0m
+  [1m[35mFixture Insert (1.0ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:19:36', '2014-03-04 06:19:36', 298486374)
+  [1m[36m (1.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.7ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.7ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.1ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 54ms (ActiveRecord: 12.1ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[35m (0.5ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.4ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.8ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.1ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 17ms (ActiveRecord: 7.8ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.9ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (2.0ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 12ms (ActiveRecord: 7.6ms)
+  [1m[35mPost Exists (1.6ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.9ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (45.4ms)
+Completed 200 OK in 229ms (Views: 226.7ms | ActiveRecord: 1.2ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 39ms (Views: 37.6ms | ActiveRecord: 1.2ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.2ms)
+Completed 200 OK in 70ms (Views: 69.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (1.1ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:19:36 UTC +00:00]]
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.6ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.0ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.9ms)
+Completed 200 OK in 89ms (Views: 83.6ms | ActiveRecord: 2.6ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:19:37 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:19:37 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (0.9ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.6ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:19:37 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 5.0ms)
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (1.1ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (1.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.3ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 49ms (Views: 48.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (123.0ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (425.1ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (11.4ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (21.7ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (6.9ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (16.6ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (17.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (4.8ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (7.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.8ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (2.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (1.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.6ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.8ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (1.6ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.1ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:20:18', '2014-03-04 06:20:18', 980190962)[0m
+  [1m[35mFixture Insert (1.6ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:20:18', '2014-03-04 06:20:18', 298486374)
+  [1m[36m (2.4ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.6ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.5ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 58ms (ActiveRecord: 13.2ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.4ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.3ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 15ms (ActiveRecord: 7.4ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (1.5ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (1.7ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (1.8ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 10ms (ActiveRecord: 5.8ms)
+  [1m[35mPost Exists (2.0ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:20:18 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (47.3ms)
+Completed 200 OK in 216ms (Views: 213.3ms | ActiveRecord: 1.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (2.8ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 47ms (Views: 43.0ms | ActiveRecord: 2.8ms)
+  [1m[35m (1.2ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.4ms)
+Completed 200 OK in 83ms (Views: 82.9ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.4ms)[0m  ROLLBACK
+  [1m[36m (0.3ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.3ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.6ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:20:19 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:20:19 UTC +00:00]]
+  [1m[35m (0.3ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (0.9ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.8ms)
+Completed 200 OK in 70ms (Views: 65.4ms | ActiveRecord: 2.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:20:19 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:20:19 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (0.9ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.2ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:20:19 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 13ms (ActiveRecord: 4.6ms)
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 48ms (Views: 47.8ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (116.8ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (408.3ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (7.6ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (21.9ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (5.8ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (15.3ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (16.6ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.8ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (7.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.6ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (3.1ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.3ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.9ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.9ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:25:48', '2014-03-04 06:25:48', 980190962)[0m
+  [1m[35mFixture Insert (1.3ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:25:48', '2014-03-04 06:25:48', 298486374)
+  [1m[36m (1.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.6ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.2ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.4ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 56ms (ActiveRecord: 13.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.6ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.4ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 11ms (ActiveRecord: 6.4ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.8ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:25:48 UTC +00:00]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.0ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (1.7ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 10ms (ActiveRecord: 6.2ms)
+  [1m[35mPost Exists (1.4ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (44.7ms)
+Completed 200 OK in 226ms (Views: 223.4ms | ActiveRecord: 1.2ms)
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (0.8ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 44ms (Views: 43.0ms | ActiveRecord: 0.8ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (1.9ms)
+Completed 200 OK in 81ms (Views: 79.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00]]
+  [1m[35m (0.5ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.0ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (19.4ms)
+Completed 200 OK in 83ms (Views: 78.7ms | ActiveRecord: 2.2ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.8ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.1ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:25:49 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 9ms (ActiveRecord: 4.5ms)
+  [1m[35mPost Load (0.9ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.4ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 49ms (Views: 47.9ms | ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[36m (107.1ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (288.8ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (8.2ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (14.3ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (2.0ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (5.7ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (9.6ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (5.2ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (8.4ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (2.6ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (3.2ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (2.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.9ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (3.3ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.9ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (1.6ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:26:08', '2014-03-04 06:26:08', 980190962)[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:26:08', '2014-03-04 06:26:08', 298486374)
+  [1m[36m (2.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.2ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.6ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 57ms (ActiveRecord: 13.3ms)
+  [1m[36m (2.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (1.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[36m (1.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.2ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.8ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 10ms (ActiveRecord: 6.2ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (2.8ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (1.9ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 13ms (ActiveRecord: 6.9ms)
+  [1m[35mPost Exists (1.3ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (46.0ms)
+Completed 200 OK in 247ms (Views: 245.1ms | ActiveRecord: 1.2ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 44ms (Views: 42.3ms | ActiveRecord: 1.2ms)
+  [1m[35m (1.2ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.2ms)
+Completed 200 OK in 69ms (Views: 68.8ms | ActiveRecord: 0.0ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (0.9ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:26:08 UTC +00:00]]
+  [1m[35m (0.7ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.0ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.1ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (9.2ms)
+Completed 200 OK in 83ms (Views: 79.6ms | ActiveRecord: 2.1ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.5ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:26:09 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:26:09 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.5ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:26:09 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 5.1ms)
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.5ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 62ms (Views: 61.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (117.6ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (360.3ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (6.2ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (8.7ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (2.8ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (6.7ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (7.1ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.3ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (5.9ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.4ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (2.6ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (2.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (2.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (1.7ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.8ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.5ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:28:51', '2014-03-04 06:28:51', 980190962)[0m
+  [1m[35mFixture Insert (1.3ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-04 06:28:51', '2014-03-04 06:28:51', 298486374)
+  [1m[36m (2.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (0.8ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (6.8ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+  [1m[36mPost Load (2.4ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190963"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.8ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string4"], ["commenter", "string3"], ["created_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00], ["post_id", 980190963], ["updated_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190963
+Completed 302 Found in 53ms (ActiveRecord: 12.1ms)
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.6ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 04 Mar 2014 06:28:51 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"2", "post_id"=>"980190964"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190964"]]
+  [1m[35mComment Load (2.5ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1 AND "comments"."id" = $2 LIMIT 1  [["post_id", 980190964], ["id", "2"]]
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.8ms)[0m  DELETE FROM "comments" WHERE "comments"."id" = $1  [["id", 2]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190964
+Completed 302 Found in 14ms (ActiveRecord: 6.9ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (1.7ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.3ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190965"]]
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (1.7ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190965]]
+  [1m[35mSQL (1.6ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190965]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 10ms (ActiveRecord: 5.8ms)
+  [1m[35mPost Exists (1.2ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  Rendered posts/_form.html.haml (45.1ms)
+Completed 200 OK in 231ms (Views: 228.4ms | ActiveRecord: 1.0ms)
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.2ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 49ms (Views: 47.1ms | ActiveRecord: 1.2ms)
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.4ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+  Rendered posts/_form.html.haml (2.1ms)
+Completed 200 OK in 91ms (Views: 90.5ms | ActiveRecord: 0.0ms)
+  [1m[35m (1.1ms)[0m  ROLLBACK
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.6ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00]]
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  [1m[35mComment Load (1.9ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.9ms)
+Completed 200 OK in 71ms (Views: 66.0ms | ActiveRecord: 3.2ms)
+  [1m[36m (0.5ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.1ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190968  [["title", "string19"], ["text", "string20"], ["updated_at", Tue, 04 Mar 2014 06:28:52 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190968
+Completed 302 Found in 10ms (ActiveRecord: 4.6ms)
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190968]]
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+Processing by SessionsController#create as HTML
+  Parameters: {"username"=>"admin", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (1.7ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'admin' LIMIT 1[0m
+Completed 500 Internal Server Error in 51ms
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 51ms (Views: 50.1ms | ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK

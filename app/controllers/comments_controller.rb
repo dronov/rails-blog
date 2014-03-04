@@ -1,5 +1,5 @@
 class CommentsController < ApplicationController
-  helper_method :current_user
+  before_filter :signed_in?
 
   def create
     @post = Post.find(params[:post_id])

@@ -5,10 +5,9 @@ class SessionsController < ApplicationController
 
   def create
     user = User.find_by_username(params[:username])
-    user.authenticate(params[:password])
+    user = user.authenticate(params[:password])
     if user
-      session[:username] = user.username
-      @current_user = user.username
+      sign_in(user)
       redirect_to root_path
     else
       redirect_to root_path
@@ -16,7 +15,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-    session[:username] = nil
+    sign_out
     redirect_to root_path
   end
 

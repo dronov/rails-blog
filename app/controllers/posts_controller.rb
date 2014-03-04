@@ -1,21 +1,18 @@
 class PostsController < ApplicationController
-  before_filter :current_user
+
+  before_filter :signed_in?, except: [:show, :index]
 
   def new
     @post = Post.new
   end
 
   def create
-    if @current_user
-      @post = Post.new(post_params)
+    @post = Post.new(post_params)
 
-      if @post.save
-        redirect_to @post
-      else
-        render 'new'
-      end
+    if @post.save
+      redirect_to @post
     else
-      redirect_to root_path
+      render 'new'
     end
   end
 

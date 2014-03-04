@@ -4,6 +4,8 @@ gem 'pg'
 
 gem 'haml'
 
+gem 'carrierwave'
+
 gem "less-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
