@@ -6,6 +6,8 @@ gem 'haml'
 
 gem 'carrierwave'
 
+gem 'pre-commit'
+
 gem "less-rails"
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
