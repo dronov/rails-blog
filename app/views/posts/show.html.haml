@@ -1,18 +1,17 @@
 %p
-  %strong Title:
-  = @post.title
+  %strong= @post.title
 
 %p
   %strongText:
   = @post.text
 
 %p
-  = @post.picture
+  = image_tag @post.image_url.to_s
 
-%h2 Comments
+%h4 Comments
 = render @post.comments
 
-%h2 Add a comment:
+%b Add a comment:
 = render "comments/form"
 
 = link_to 'Edit Post', edit_post_path(@post)  |

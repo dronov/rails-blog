@@ -13573,3 +13573,164 @@ WelcomeControllerTest: test_should_get_index
 Processing by WelcomeController#index as HTML
 Completed 200 OK in 51ms (Views: 50.1ms | ActiveRecord: 0.0ms)
   [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (146.1ms)[0m  [1mDROP DATABASE IF EXISTS "demo_db"[0m
+  [1m[35m (691.6ms)[0m  CREATE DATABASE "demo_db" ENCODING = 'UTF8'
+  [1m[36mSQL (4.3ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (15.0ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (6.8ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (17.3ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp, "image" character varying(255)) 
+  [1m[36m (16.0ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.9ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (2.6ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.5ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (1.4ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140305084935')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140304084107')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140304100922')[0m
+  [1m[35m (1.2ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140304085829')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140304100258')[0m
+  [1m[35m (1.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140228183536')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140225081253')[0m
+  [1m[35m (1.4ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140305084347')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.5ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (0.8ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (3.7ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (2.6ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (2.2ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-05 12:04:41', '2014-03-05 12:04:41', 980190962)[0m
+  [1m[35mFixture Insert (1.3ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-05 12:04:41', '2014-03-05 12:04:41', 298486374)
+  [1m[36m (2.7ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.3ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (14.9ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00]]
+  [1m[35m (0.4ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00]]
+  [1m[36m (1.2ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.0ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00], ["post_id", 980190964], ["updated_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00]]
+  [1m[35m (0.3ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"1", "post_id"=>"980190964"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string9", "text"=>"string10"}}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190965"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35mPost Exists (1.9ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190965 LIMIT 1
+  [1m[36m (1.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (1.3ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.7ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00], ["text", "string14"], ["title", "string13"], ["updated_at", Wed, 05 Mar 2014 12:04:41 UTC +00:00]]
+  [1m[36m (1.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190966"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[35mPost Load (1.4ms)[0m  SELECT "posts".* FROM "posts"
+Completed 200 OK in 483ms (Views: 480.7ms | ActiveRecord: 1.4ms)
+  [1m[36m (0.5ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+Processing by PostsController#new as HTML
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.4ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.3ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[36m (0.4ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.7ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Wed, 05 Mar 2014 12:04:42 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Wed, 05 Mar 2014 12:04:42 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[35mPost Load (1.0ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190967"]]
+  [1m[36mComment Load (1.6ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190967]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (32.9ms)
+Completed 200 OK in 131ms (Views: 127.3ms | ActiveRecord: 2.6ms)
+  [1m[35m (0.6ms)[0m  ROLLBACK
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[35m (0.5ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Wed, 05 Mar 2014 12:04:42 UTC +00:00], ["text", "string18"], ["title", "string17"], ["updated_at", Wed, 05 Mar 2014 12:04:42 UTC +00:00]]
+  [1m[35m (0.5ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string19", "text"=>"string20"}, "id"=>"980190968"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36mPost Load (1.4ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", 980190968]]
+  [1m[35m (1.2ms)[0m  ROLLBACK
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+--------------------------------
+TestsControllerTest: test_create
+--------------------------------
+Processing by SessionsController#create as HTML
+  Parameters: {"username"=>"admin", "password"=>"[FILTERED]"}
+  [1m[35mUser Load (1.8ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'admin' LIMIT 1
+Completed 500 Internal Server Error in 64ms
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+---------------------------------
+TestsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.6ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 48ms (Views: 47.0ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.7ms)[0m  [1mROLLBACK[0m

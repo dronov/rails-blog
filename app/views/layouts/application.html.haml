@@ -1,32 +1,32 @@
 %html
-%head
-  %title Wonderful Blog
-  = stylesheet_link_tag    "application", :media => "all"
-  = javascript_include_tag "application"
-  = csrf_meta_tags
+  %head
+    %title Wonderful Blog
+    = stylesheet_link_tag    "application", :media => "all"
+    = javascript_include_tag "application"
+    = csrf_meta_tags
 
 
-.navbar.navbar-fixed-top
-  .navbar-inner
-    .container
-      %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
-        %span.icon-bar
-        %span.icon-bar
-        %span.icon-bar
-      %a.brand{href: "/"} Wonderful Blog
-      .nav-collapse
-        %ul.nav
-          %li= link_to "All posts", "/posts"
-          %li= link_to "New post", "/posts/new"
-          - if current_user
-            %li= link_to 'Logout', "/log_out"
-          - else
-            %li= link_to 'Login', "/log_in"
+  .navbar.navbar-fixed-top
+    .navbar-inner
+      .container
+        %a.btn.btn-navbar{"data-target" => ".nav-collapse", "data-toggle" => "collapse"}
+          %span.icon-bar
+          %span.icon-bar
+          %span.icon-bar
+        %a.brand{href: "/"} Wonderful Blog
+        .nav-collapse
+          %ul.nav
+            %li= link_to "All posts", "/posts"
+            %li= link_to "New post", "/posts/new"
+            - if current_user
+              %li= link_to 'Logout', "/log_out"
+            - else
+              %li= link_to 'Login', "/log_in"
 
-.container
-  .row
-    .span9= yield
-    .span3
-      %h2 About us
-      This is test blog from Ruby on Rails Getting started.
-      %p Mikhail Dronov
+  .container
+    .row
+      .span9= yield
+      .span3
+        %h2 About us
+        This is test blog from Ruby on Rails Getting started.
+        %p Mikhail Dronov

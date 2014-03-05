@@ -2,6 +2,8 @@ source 'https://rubygems.org'
 
 gem 'pg'
 
+gem 'coveralls', require: false
+
 gem 'haml'
 
 gem 'carrierwave'
