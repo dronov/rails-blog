@@ -5,9 +5,11 @@ class SessionsControllerTest < ActionController::TestCase
   include FactoryGirl::Syntax::Methods
 
   test "create" do
-    params = attributes_for(:user)
+    test_user = create :user
+    session[:username] = test_user.username
+    params = {:username => test_user.username, :password => test_user.password}
     post :create, params
-    assert_responce :success
+    assert_response :redirect
   end
 
   test "destroy" do
