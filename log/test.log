@@ -16971,3 +16971,176 @@ WelcomeControllerTest: test_should_get_index
 Processing by WelcomeController#index as HTML
 Completed 200 OK in 81ms (Views: 79.6ms | ActiveRecord: 0.0ms)
   [1m[36m (1.1ms)[0m  [1mROLLBACK[0m
+  [1m[36m (113.4ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (398.7ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36mSQL (4.2ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (9.1ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (5.0ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (16.4ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp, "image" character varying(255)) 
+  [1m[36m (5.0ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (1.4ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (2.3ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (0.6ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140305084935')[0m
+  [1m[35m (1.0ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140304084107')
+  [1m[36m (0.9ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140304085829')[0m
+  [1m[35m (1.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140304100258')
+  [1m[36m (1.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140228183536')[0m
+  [1m[35m (1.3ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140225081253')
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140226112447')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.4ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (2.4ms)[0m  ALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+  [1m[35mFixture Delete (0.7ms)[0m  DELETE FROM "posts"
+  [1m[36mFixture Insert (1.6ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-06 12:58:27', '2014-03-06 12:58:27', 980190962)[0m
+  [1m[35mFixture Insert (1.3ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-06 12:58:27', '2014-03-06 12:58:27', 298486374)
+  [1m[36m (1.8ms)[0m  [1mCOMMIT[0m
+  [1m[35m (1.1ms)[0m  ALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL
+  [1m[36m (0.6ms)[0m  [1mBEGIN[0m
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (5.3ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00]]
+  [1m[35m (0.3ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.1ms)[0m  [1mINSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"[0m  [["body", "string6"], ["commenter", "string5"], ["created_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00], ["post_id", 980190964], ["updated_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by CommentsController#destroy as HTML
+  Parameters: {"id"=>"1", "post_id"=>"980190964"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00], ["password_digest", "$2a$04$gOlHj56Xp/eq6CcbIaT30OtsZBAMu9xDZzzWvnUNcu0q/Xny64Sqa"], ["updated_at", Thu, 06 Mar 2014 12:58:27 UTC +00:00], ["username", "string9"]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string11", "text"=>"string12"}}
+  [1m[35mUser Load (2.1ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'string9' LIMIT 1
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.1ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[36m (0.6ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190965
+Completed 302 Found in 14ms (ActiveRecord: 4.3ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["password_digest", "$2a$04$.cnu5n6maKHNVvpcKst7pO1vOk2mJwN9oh/yglhCDUwz/XlYA2xZi"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["username", "string13"]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.8ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[36m (0.5ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by PostsController#destroy as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[35mUser Load (0.9ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'string13' LIMIT 1
+  [1m[36mPost Load (1.6ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190966"]]
+  [1m[35m (0.5ms)[0m  SAVEPOINT active_record_1
+  [1m[36mComment Load (1.4ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190966]]
+  [1m[35mSQL (0.9ms)[0m  DELETE FROM "posts" WHERE "posts"."id" = $1  [["id", 980190966]]
+  [1m[36m (0.4ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts
+Completed 302 Found in 43ms (ActiveRecord: 5.7ms)
+  [1m[35mPost Exists (1.3ms)[0m  SELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190966 LIMIT 1
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["password_digest", "$2a$04$HBphMgP.Njqsa/q0X0hM2OXkto5.VCa6tZPQ5LMsqsEnq8nwATipG"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["username", "string17"]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["text", "string20"], ["title", "string19"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#edit as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string17' LIMIT 1[0m
+  [1m[35mPost Load (1.4ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190967"]]
+  Rendered posts/_form.html.haml (25.9ms)
+Completed 200 OK in 285ms (Views: 277.2ms | ActiveRecord: 2.9ms)
+  [1m[36m (1.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+Processing by PostsController#index as HTML
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts"[0m
+Completed 200 OK in 45ms (Views: 43.0ms | ActiveRecord: 1.3ms)
+  [1m[35m (0.8ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+  [1m[35m (0.7ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.2ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["password_digest", "$2a$04$TWk7lgNzlxEvzNOtvcnSBe4umK7S.ikGILS9rQSNT.Uurq92UQ7P2"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["username", "string21"]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#new as HTML
+  [1m[36mUser Load (1.5ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string21' LIMIT 1[0m
+  Rendered posts/_form.html.haml (2.9ms)
+Completed 200 OK in 43ms (Views: 40.1ms | ActiveRecord: 1.5ms)
+  [1m[35m (0.7ms)[0m  ROLLBACK
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (0.6ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["text", "string24"], ["title", "string23"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[35m (0.6ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#show as HTML
+  Parameters: {"id"=>"980190968"}
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190968"]]
+  [1m[35mComment Load (0.9ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190968]]
+  Rendered collection (0.0ms)
+  Rendered comments/_form.html.haml (7.7ms)
+Completed 200 OK in 59ms (Views: 56.3ms | ActiveRecord: 2.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (0.7ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["password_digest", "$2a$04$7BZBVz1X86tTh2UTU5R0f.LyqNRgFqlOf8mW/Bp.DQFQHPjEa9QCq"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["username", "string25"]]
+  [1m[36m (0.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.5ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00], ["text", "string28"], ["title", "string27"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string29", "text"=>"string30"}, "id"=>"980190969"}
+  [1m[36mUser Load (1.4ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string25' LIMIT 1[0m
+  [1m[35mPost Load (1.1ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190969"]]
+  [1m[36m (0.6ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (2.4ms)[0m  UPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190969  [["title", "string29"], ["text", "string30"], ["updated_at", Thu, 06 Mar 2014 12:58:28 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Redirected to http://test.host/posts/980190969
+Completed 302 Found in 14ms (ActiveRecord: 6.4ms)
+  [1m[35mPost Load (1.6ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", 980190969]]
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+Processing by WelcomeController#index as HTML
+Completed 200 OK in 94ms (Views: 93.4ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
