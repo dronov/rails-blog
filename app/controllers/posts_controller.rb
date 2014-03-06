@@ -1,6 +1,6 @@
 class PostsController < ApplicationController
 
-  before_filter :signed_in?, except: [:show, :index]
+  before_filter :signed_in?, only: [:new, :create, :edit, :update, :destroy]
 
   def new
     @post = Post.new

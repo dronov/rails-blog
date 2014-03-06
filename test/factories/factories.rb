@@ -4,10 +4,16 @@ FactoryGirl.define do
     text  { generate :string }
   end
 
-	factory :comment do
+  factory :comment do
     commenter { generate :string }
     body { generate :string }
-    post 
+    post
+  end
+
+  factory :user do
+    username {generate :string}
+    password {generate :string}
+    password_confirmation { password }
   end
 
 end

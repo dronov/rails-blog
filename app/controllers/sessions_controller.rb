@@ -9,8 +9,6 @@ class SessionsController < ApplicationController
     if user
       sign_in(user)
       redirect_to root_path
-    else
-      redirect_to root_path
     end
   end
 

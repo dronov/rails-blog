@@ -1,0 +1,28 @@
+{
+  "Unit Tests": {
+    "coverage": {
+    },
+    "timestamp": 1394108302
+  },
+  "MiniTest": {
+    "coverage": {
+      "/vagrant/app/helpers/application_helper.rb": [
+        1,
+        null
+      ],
+      "/vagrant/app/helpers/comments_helper.rb": [
+        1,
+        null
+      ],
+      "/vagrant/app/helpers/posts_helper.rb": [
+        1,
+        null
+      ],
+      "/vagrant/app/helpers/welcome_helper.rb": [
+        1,
+        null
+      ]
+    },
+    "timestamp": 1394110126
+  }
+}
