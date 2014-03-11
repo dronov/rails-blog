@@ -19,7 +19,7 @@ test:
   username: vagrant
   password: qwerty
   host: localhost
-  encoding: UTF8
+  encoding: LATIN1
 
 production:
   adapter: postgresql

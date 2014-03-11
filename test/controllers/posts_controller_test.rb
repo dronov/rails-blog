@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class PostsControllerTest < ActionController::TestCase
+class Web::PostsControllerTest < ActionController::TestCase
 
   include FactoryGirl::Syntax::Methods
 

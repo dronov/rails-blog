@@ -17144,3 +17144,352 @@ WelcomeControllerTest: test_should_get_index
 Processing by WelcomeController#index as HTML
 Completed 200 OK in 94ms (Views: 93.4ms | ActiveRecord: 0.0ms)
   [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[36m (45.7ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+PG::InsufficientPrivilege: ERROR:  must be owner of database test_db
+: DROP DATABASE IF EXISTS "test_db"
+  [1m[36m (1.7ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+PG::InsufficientPrivilege: ERROR:  must be owner of database test_db
+: DROP DATABASE IF EXISTS "test_db"
+  [1m[36m (1.0ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.6ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InsufficientPrivilege: ERROR:  permission denied to create database
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (112.5ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.8ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InsufficientPrivilege: ERROR:  permission denied to create database
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (111.6ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.7ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InsufficientPrivilege: ERROR:  permission denied to create database
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (115.9ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.5ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InvalidParameterValue: ERROR:  encoding UTF8 does not match locale en_US
+DETAIL:  The chosen LC_CTYPE setting requires encoding LATIN1.
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (1.0ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.7ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InvalidParameterValue: ERROR:  encoding UTF8 does not match locale en_US
+DETAIL:  The chosen LC_CTYPE setting requires encoding LATIN1.
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (1.1ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (1.7ms)[0m  CREATE DATABASE "test_db" ENCODING = 'UTF8'
+PG::InvalidParameterValue: ERROR:  encoding UTF8 does not match locale en_US
+DETAIL:  The chosen LC_CTYPE setting requires encoding LATIN1.
+: CREATE DATABASE "test_db" ENCODING = 'UTF8'
+  [1m[36m (1.0ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (320.5ms)[0m  CREATE DATABASE "test_db" ENCODING = 'LATIN1'
+  [1m[36mSQL (11.1ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (187.4ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (7.0ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (12.0ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp, "image" character varying(255)) 
+  [1m[36m (8.3ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (3.7ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (4.8ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.5ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (2.3ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140305084935')[0m
+  [1m[35m (1.6ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140226112447')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140225081253')[0m
+  [1m[35m (1.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140228183536')
+  [1m[36mActiveRecord::SchemaMigration Load (1.3ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.9ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.5ms)[0m  [1mALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (3.4ms)[0m  [1mDELETE FROM "posts"[0m
+  [1m[35mFixture Insert (1.5ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-11 14:46:44', '2014-03-11 14:46:44', 980190962)
+  [1m[36mFixture Insert (1.1ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-11 14:46:44', '2014-03-11 14:46:44', 298486374)[0m
+  [1m[35m (2.0ms)[0m  COMMIT
+  [1m[36m (1.0ms)[0m  [1mALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+-----------------------------------
+CommentsControllerTest: test_create
+-----------------------------------
+  [1m[36m (1.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (13.3ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+CommentsControllerTest: test_destroy
+------------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[35m (1.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (3.1ms)[0m  INSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+--------------------------------
+PostsControllerTest: test_create
+--------------------------------
+  [1m[35m (1.2ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (3.1ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$69I3SFiEB6k52BybUr99Bui61uz206EknGexhyjlor0UY8u5L0dMy"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string9"]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+---------------------------------
+PostsControllerTest: test_destroy
+---------------------------------
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$aoo7UTgRA92TPzQE2MVuG.mIT8v9xYE6iGdEzF8/.PaeeWEwfe8p2"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string13"]]
+  [1m[36m (1.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+------------------------------
+PostsControllerTest: test_edit
+------------------------------
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$M/qG6VHuQi.3K7h9JzPMFud/ih.ji33/WJJrMeRFE/lGvNVpo7hL."], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string17"]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string20"], ["title", "string19"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.0ms)[0m  BEGIN
+-------------------------------
+PostsControllerTest: test_index
+-------------------------------
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.7ms)[0m  BEGIN
+-----------------------------
+PostsControllerTest: test_new
+-----------------------------
+  [1m[36m (1.2ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$Wu.frGge/.NiCq5r2rcSIOpuMSD5HYJQ4yQEau2bFLfzssEhH0Py."], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string21"]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (1.1ms)[0m  [1mBEGIN[0m
+------------------------------
+PostsControllerTest: test_show
+------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string24"], ["title", "string23"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[35m (1.2ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+--------------------------------
+PostsControllerTest: test_update
+--------------------------------
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$ywgkUkD/n07J.wdW5ZtmIuZ4npY9C1fmdNkZ8KFNA72zymZJ1jndq"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string25"]]
+  [1m[36m (1.3ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["text", "string28"], ["title", "string27"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+-----------------------------------
+SessionsControllerTest: test_create
+-----------------------------------
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$nxCSKQhX2LrPns.zcAWsTe2vZbH.N7VGyBBENpRAYSBUG31glVRmC"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string31"]]
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (1.0ms)[0m  [1mBEGIN[0m
+------------------------------------
+SessionsControllerTest: test_destroy
+------------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["password_digest", "$2a$04$vwJhbApiyksxIVWMMogUz.XUE6PNoGXwjxn.GOPmczDb9f09.B/m6"], ["updated_at", Tue, 11 Mar 2014 14:46:45 UTC +00:00], ["username", "string33"]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+--------------------------------------------
+WelcomeControllerTest: test_should_get_index
+--------------------------------------------
+  [1m[36m (1.0ms)[0m  [1mROLLBACK[0m
+  [1m[36m (113.4ms)[0m  [1mDROP DATABASE IF EXISTS "test_db"[0m
+  [1m[35m (368.1ms)[0m  CREATE DATABASE "test_db" ENCODING = 'LATIN1'
+  [1m[36mSQL (11.0ms)[0m  [1mCREATE EXTENSION IF NOT EXISTS "plpgsql"[0m
+  [1m[35m (14.5ms)[0m  CREATE TABLE "comments" ("id" serial primary key, "commenter" character varying(255), "body" text, "post_id" integer, "created_at" timestamp, "updated_at" timestamp) 
+  [1m[36m (5.2ms)[0m  [1mCREATE INDEX "index_comments_on_post_id" ON "comments" USING btree ("post_id")[0m
+  [1m[35m (11.2ms)[0m  CREATE TABLE "posts" ("id" serial primary key, "title" character varying(255), "text" text, "created_at" timestamp, "updated_at" timestamp, "image" character varying(255)) 
+  [1m[36m (6.7ms)[0m  [1mCREATE TABLE "users" ("id" serial primary key, "username" character varying(255), "password_digest" character varying(255), "created_at" timestamp, "updated_at" timestamp) [0m
+  [1m[35m (2.3ms)[0m  CREATE TABLE "schema_migrations" ("version" character varying(255) NOT NULL) 
+  [1m[36m (4.6ms)[0m  [1mCREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")[0m
+  [1m[35m (1.3ms)[0m  SELECT version FROM "schema_migrations"
+  [1m[36m (2.0ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140305084935')[0m
+  [1m[35m (1.7ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140226112447')
+  [1m[36m (1.5ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20140225081253')[0m
+  [1m[35m (1.5ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20140228183536')
+  [1m[36mActiveRecord::SchemaMigration Load (1.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35mActiveRecord::SchemaMigration Load (1.1ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (2.3ms)[0m  [1mALTER TABLE "comments" DISABLE TRIGGER ALL;ALTER TABLE "posts" DISABLE TRIGGER ALL;ALTER TABLE "users" DISABLE TRIGGER ALL;ALTER TABLE "schema_migrations" DISABLE TRIGGER ALL[0m
+  [1m[35m (1.1ms)[0m  BEGIN
+  [1m[36mFixture Delete (2.0ms)[0m  [1mDELETE FROM "posts"[0m
+  [1m[35mFixture Insert (1.4ms)[0m  INSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-11 15:03:42', '2014-03-11 15:03:42', 980190962)
+  [1m[36mFixture Insert (0.9ms)[0m  [1mINSERT INTO "posts" ("title", "text", "created_at", "updated_at", "id") VALUES ('MyString', 'MyText', '2014-03-11 15:03:42', '2014-03-11 15:03:42', 298486374)[0m
+  [1m[35m (1.5ms)[0m  COMMIT
+  [1m[36m (0.8ms)[0m  [1mALTER TABLE "comments" ENABLE TRIGGER ALL;ALTER TABLE "posts" ENABLE TRIGGER ALL;ALTER TABLE "users" ENABLE TRIGGER ALL;ALTER TABLE "schema_migrations" ENABLE TRIGGER ALL[0m
+  [1m[35m (0.6ms)[0m  BEGIN
+----------------------------------------
+Web::CommentsControllerTest: test_create
+----------------------------------------
+  [1m[36m (1.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (14.4ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00], ["text", "string2"], ["title", "string1"], ["updated_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00]]
+  [1m[36m (1.7ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::CommentsController#create as HTML
+  Parameters: {"comment"=>{"commenter"=>"string3", "body"=>"string4"}, "post_id"=>"980190963"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 2ms (ActiveRecord: 0.0ms)
+  [1m[35m (1.1ms)[0m  ROLLBACK
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+-----------------------------------------
+Web::CommentsControllerTest: test_destroy
+-----------------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00], ["text", "string8"], ["title", "string7"], ["updated_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (3.8ms)[0m  INSERT INTO "comments" ("body", "commenter", "created_at", "post_id", "updated_at") VALUES ($1, $2, $3, $4, $5) RETURNING "id"  [["body", "string6"], ["commenter", "string5"], ["created_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00], ["post_id", 980190964], ["updated_at", Tue, 11 Mar 2014 15:03:42 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::CommentsController#destroy as HTML
+  Parameters: {"id"=>"1", "post_id"=>"980190964"}
+Redirected to http://test.host/
+Filter chain halted as :signed_in? rendered or redirected
+Completed 302 Found in 1ms (ActiveRecord: 0.0ms)
+  [1m[35m (1.0ms)[0m  ROLLBACK
+  [1m[36m (1.3ms)[0m  [1mBEGIN[0m
+-------------------------------------
+Web::PostsControllerTest: test_create
+-------------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.8ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["password_digest", "$2a$04$8sDdGRuNYz/RBvFGjEhtbeljMR/kPrFGHuJP4PunumEwWdAFTH7ou"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["username", "string9"]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Web::PostsController#create as HTML
+  Parameters: {"post"=>{"title"=>"string11", "text"=>"string12"}}
+  [1m[36mUser Load (1.8ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string9' LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.7ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["text", "string12"], ["title", "string11"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00]]
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190965
+Completed 302 Found in 29ms (ActiveRecord: 5.4ms)
+  [1m[36m (1.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+--------------------------------------
+Web::PostsControllerTest: test_destroy
+--------------------------------------
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.6ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["password_digest", "$2a$04$n8vefCed7Mk.H2GF4ozl/..ECzKWi5ley23kyJUdzdSbi/qhlZcnm"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["username", "string13"]]
+  [1m[36m (0.9ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.5ms)[0m  [1mINSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["text", "string16"], ["title", "string15"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00]]
+  [1m[35m (1.1ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Web::PostsController#destroy as HTML
+  Parameters: {"id"=>"980190966"}
+  [1m[36mUser Load (1.9ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string13' LIMIT 1[0m
+  [1m[35mPost Load (2.6ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190966"]]
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mComment Load (2.0ms)[0m  SELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1  [["post_id", 980190966]]
+  [1m[36mSQL (1.9ms)[0m  [1mDELETE FROM "posts" WHERE "posts"."id" = $1[0m  [["id", 980190966]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts
+Completed 302 Found in 95ms (ActiveRecord: 10.1ms)
+  [1m[36mPost Exists (1.6ms)[0m  [1mSELECT 1 AS one FROM "posts" WHERE "posts"."id" = 980190966 LIMIT 1[0m
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.7ms)[0m  [1mBEGIN[0m
+-----------------------------------
+Web::PostsControllerTest: test_edit
+-----------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.6ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["password_digest", "$2a$04$k3aFH7zeiLQPdCWF3PXWdeITAtFmLjBee/XnXzxeqUMPIGXE/LNLO"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["username", "string17"]]
+  [1m[35m (1.0ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.4ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00], ["text", "string20"], ["title", "string19"], ["updated_at", Tue, 11 Mar 2014 15:03:43 UTC +00:00]]
+  [1m[36m (0.9ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::PostsController#edit as HTML
+  Parameters: {"id"=>"980190967"}
+  [1m[35mUser Load (1.7ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'string17' LIMIT 1
+  [1m[36mPost Load (1.3ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190967"]]
+  Rendered web/posts/_form.html.haml (119.7ms)
+Completed 200 OK in 1700ms (Views: 1692.7ms | ActiveRecord: 3.1ms)
+  [1m[35m (1.1ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+------------------------------------
+Web::PostsControllerTest: test_index
+------------------------------------
+Processing by Web::PostsController#index as HTML
+  [1m[35mPost Load (1.6ms)[0m  SELECT "posts".* FROM "posts"
+Completed 200 OK in 131ms (Views: 128.9ms | ActiveRecord: 1.6ms)
+  [1m[36m (0.8ms)[0m  [1mROLLBACK[0m
+  [1m[35m (1.3ms)[0m  BEGIN
+----------------------------------
+Web::PostsControllerTest: test_new
+----------------------------------
+  [1m[36m (1.0ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.9ms)[0m  INSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["password_digest", "$2a$04$22fSXVbOwqojKKtwxYWkB.fy.myWQB1i9ok2j5amaYtY6PpY.yvPS"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["username", "string21"]]
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::PostsController#new as HTML
+  [1m[35mUser Load (1.6ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'string21' LIMIT 1
+  Rendered web/posts/_form.html.haml (5.8ms)
+Completed 200 OK in 147ms (Views: 143.2ms | ActiveRecord: 1.6ms)
+  [1m[36m (1.2ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.9ms)[0m  BEGIN
+-----------------------------------
+Web::PostsControllerTest: test_show
+-----------------------------------
+  [1m[36m (0.9ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.5ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["text", "string24"], ["title", "string23"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00]]
+  [1m[36m (1.0ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::PostsController#show as HTML
+  Parameters: {"id"=>"980190968"}
+  [1m[35mPost Load (1.2ms)[0m  SELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1  [["id", "980190968"]]
+  [1m[36mComment Load (1.3ms)[0m  [1mSELECT "comments".* FROM "comments" WHERE "comments"."post_id" = $1[0m  [["post_id", 980190968]]
+  Rendered collection (0.0ms)
+  Rendered web/comments/_form.html.haml (48.6ms)
+Completed 200 OK in 245ms (Views: 240.3ms | ActiveRecord: 2.5ms)
+  [1m[35m (1.1ms)[0m  ROLLBACK
+  [1m[36m (0.8ms)[0m  [1mBEGIN[0m
+-------------------------------------
+Web::PostsControllerTest: test_update
+-------------------------------------
+  [1m[35m (0.9ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["password_digest", "$2a$04$zFNXtjzXLrp1IZpPQUdzmOIIYe7BPt4LHDP/ChAKeHX5J6ZQPlJZW"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["username", "string25"]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.8ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (1.2ms)[0m  INSERT INTO "posts" ("created_at", "text", "title", "updated_at") VALUES ($1, $2, $3, $4) RETURNING "id"  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["text", "string28"], ["title", "string27"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00]]
+  [1m[36m (0.8ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+Processing by Web::PostsController#update as HTML
+  Parameters: {"post"=>{"title"=>"string29", "text"=>"string30"}, "id"=>"980190969"}
+  [1m[35mUser Load (1.4ms)[0m  SELECT "users".* FROM "users" WHERE "users"."username" = 'string25' LIMIT 1
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", "980190969"]]
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (2.9ms)[0m  [1mUPDATE "posts" SET "title" = $1, "text" = $2, "updated_at" = $3 WHERE "posts"."id" = 980190969[0m  [["title", "string29"], ["text", "string30"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+Redirected to http://test.host/posts/980190969
+Completed 302 Found in 19ms (ActiveRecord: 7.3ms)
+  [1m[36mPost Load (1.1ms)[0m  [1mSELECT "posts".* FROM "posts" WHERE "posts"."id" = $1 LIMIT 1[0m  [["id", 980190969]]
+  [1m[35m (0.9ms)[0m  ROLLBACK
+  [1m[36m (0.9ms)[0m  [1mBEGIN[0m
+----------------------------------------
+Web::SessionsControllerTest: test_create
+----------------------------------------
+  [1m[35m (1.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.4ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["password_digest", "$2a$04$Wtge7QpghJvXLonCAnTPpuunwORNzmLnLPzfSXRowWlawd5G.WRay"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["username", "string31"]]
+  [1m[35m (0.9ms)[0m  RELEASE SAVEPOINT active_record_1
+Processing by Web::SessionsController#create as HTML
+  Parameters: {"username"=>"string31", "password"=>"[FILTERED]"}
+  [1m[36mUser Load (2.5ms)[0m  [1mSELECT "users".* FROM "users" WHERE "users"."username" = 'string31' LIMIT 1[0m
+Redirected to http://test.host/
+Completed 302 Found in 82ms (ActiveRecord: 2.5ms)
+  [1m[35m (1.2ms)[0m  ROLLBACK
+  [1m[36m (0.5ms)[0m  [1mBEGIN[0m
+-----------------------------------------
+Web::SessionsControllerTest: test_destroy
+-----------------------------------------
+  [1m[35m (0.8ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.5ms)[0m  [1mINSERT INTO "users" ("created_at", "password_digest", "updated_at", "username") VALUES ($1, $2, $3, $4) RETURNING "id"[0m  [["created_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["password_digest", "$2a$04$ePAOjcHCWhP8JarSt4njw.ZzlECiyTN.ucdAJ/jzShHHDvFt/PK.S"], ["updated_at", Tue, 11 Mar 2014 15:03:45 UTC +00:00], ["username", "string33"]]
+  [1m[35m (0.8ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m
+  [1m[35m (0.8ms)[0m  BEGIN
+-------------------------------------------------
+Web::WelcomeControllerTest: test_should_get_index
+-------------------------------------------------
+Processing by Web::WelcomeController#index as HTML
+Completed 200 OK in 142ms (Views: 141.2ms | ActiveRecord: 0.0ms)
+  [1m[36m (0.9ms)[0m  [1mROLLBACK[0m

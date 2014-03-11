@@ -1,0 +1,12 @@
+%h3 Posts:
+
+%table
+
+  - @posts.each do |post|
+    %tr
+      %td
+        %strong= post.title
+    %tr
+      %td= post.text
+    %tr
+      %td= link_to 'Show more', post

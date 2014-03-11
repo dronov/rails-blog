@@ -1,4 +1,4 @@
-class CommentsController < ApplicationController
+class Web::CommentsController < Web::ApplicationController
   before_filter :signed_in?
 
   def create

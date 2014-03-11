@@ -1,4 +1,4 @@
-class PostsController < ApplicationController
+class Web::PostsController < Web::ApplicationController
 
   before_filter :signed_in?, only: [:new, :create, :edit, :update, :destroy]
 
